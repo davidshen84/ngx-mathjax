@@ -1,4 +1,5 @@
 {
+  "$schema": "./node_modules/ng-packagr/package.schema.json",
   "name": "ngx-mathjax",
   "version": "0.0.0",
   "scripts": {
@@ -7,10 +8,19 @@
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "packagr": "ng-packagr -p package.json"
+  },
+  "ngPackage": {
+    "lib": {
+      "entryFile": "public_api.ts"
+    }
   },
   "private": true,
-  "dependencies": {
+  "peerDependencies": {
+    "@angular/core": "^6.0.0"
+  },
+  "devDependencies": {
     "@angular/animations": "~7.0.0",
     "@angular/common": "~7.0.0",
     "@angular/compiler": "~7.0.0",
@@ -23,9 +33,7 @@
     "core-js": "^2.5.4",
     "mathjax": "^2.7.5",
     "rxjs": "~6.3.3",
-    "zone.js": "~0.8.26"
-  },
-  "devDependencies": {
+    "zone.js": "~0.8.26",
     "@angular-devkit/build-angular": "~0.10.0",
     "@angular/cli": "~7.0.4",
     "@angular/compiler-cli": "~7.0.0",
@@ -45,6 +53,7 @@
     "protractor": "~5.4.0",
     "ts-node": "~7.0.0",
     "tslint": "~5.11.0",
-    "typescript": "~3.1.1"
+    "typescript": "~3.1.1",
+    "tsickle": "^0.33.1"
   }
 }
