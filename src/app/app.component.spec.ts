@@ -1,12 +1,30 @@
-import { TestBed, async } from '@angular/core/testing';
-import { AppComponent } from './app.component';
+import {async, TestBed} from '@angular/core/testing';
+import {AppComponent} from './app.component';
+import {MathJaxModule, ModuleConfiguration} from './math-jax/math-jax.module';
+import {_Window} from './math-jax/domain/window';
+import {MathJaxService} from './math-jax/math-jax.service';
 
 describe('AppComponent', () => {
+/*  const mockWindow = {
+    document: {
+      createElement: (...args: any[]) => ({}),
+      getElementsByTagName: (n: string) => [
+        {
+          appendChild: () => {
+          }
+        }
+      ]
+    }
+  };*/
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [
         AppComponent
       ],
+/*      imports: [MathJaxModule],
+      providers: [{provide: ModuleConfiguration, useValue: {version: '', config: ''}},
+        {provide: _Window, useValue: mockWindow},
+        {provide: MathJaxService, useValue: {}}]*/
     }).compileComponents();
   }));
 

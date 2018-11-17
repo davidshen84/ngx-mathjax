@@ -1,1 +1,22 @@
-<p>ngx-mathjax demo</p>
+<div>{{title}} demo
+  <div appMathJax>test
+    $$
+    x = 3
+    $$
+  </div>
+
+  <div appMathJax>test2
+    \( y = 3 \)
+  </div>
+
+  <div>
+    <button (click)="show = !show">show/hide</button>
+    <div *ngIf="show" appMathJax>
+
+      $$
+      z = y
+      $$
+
+    </div>
+  </div>
+</div>

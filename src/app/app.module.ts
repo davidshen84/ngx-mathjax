@@ -1,8 +1,8 @@
-import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import {BrowserModule} from '@angular/platform-browser';
+import {NgModule} from '@angular/core';
 
-import { AppComponent } from './app.component';
-import { MathJaxModule } from './math-jax/math-jax.module';
+import {AppComponent} from './app.component';
+import {MathJaxModule} from './math-jax/math-jax.module';
 
 @NgModule({
   declarations: [
@@ -10,7 +10,7 @@ import { MathJaxModule } from './math-jax/math-jax.module';
   ],
   imports: [
     BrowserModule,
-    MathJaxModule
+    MathJaxModule.config()
   ],
   providers: [],
   bootstrap: [AppComponent]
