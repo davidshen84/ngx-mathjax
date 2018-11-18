@@ -2,6 +2,18 @@
   "$schema": "./node_modules/ng-packagr/package.schema.json",
   "name": "ngx-mathjax",
   "version": "0.0.0",
+  "description": "Add MathJax typesetting to Angular application.",
+  "keywords": [
+    "angular",
+    "MathJax",
+    "mathjax"
+  ],
+  "author": "davidshen84",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/davidshen84/ngx-mathjax"
+  },
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
@@ -16,7 +28,7 @@
       "entryFile": "public_api.ts"
     }
   },
-  "private": true,
+  "private": false,
   "peerDependencies": {
     "@angular/core": "^6.0.0 || ^7.0.0",
     "rxjs": "^6.0.0"
