@@ -4,7 +4,7 @@ import {MathJaxService} from './math-jax.service';
 
 
 @Directive({
-  selector: '[appMathJax]'
+  selector: 'mathjax, [mathjax]'
 })
 export class MathJaxDirective implements AfterViewInit, OnDestroy {
 
@@ -18,8 +18,8 @@ export class MathJaxDirective implements AfterViewInit, OnDestroy {
   }
 
   ngAfterViewInit(): void {
-    this._sub = this._mathJaxHub$.subscribe(mjHub => {
-      mjHub.Queue(['Typeset', mjHub, this._el]);
+    this._sub = this._mathJaxHub$.subscribe(hub => {
+      hub.Queue(['Typeset', hub, this._el]);
     });
   }
 

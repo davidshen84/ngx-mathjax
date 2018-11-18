@@ -2,9 +2,7 @@ import {Injectable} from '@angular/core';
 import {BehaviorSubject} from 'rxjs';
 import {filter} from 'rxjs/operators';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class MathJaxService {
 
   public readonly MathJaxHubSubject = new BehaviorSubject<MathJax.Hub>(undefined);

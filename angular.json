@@ -7,10 +7,10 @@
       "root": "",
       "sourceRoot": "src",
       "projectType": "application",
-      "prefix": "app",
+      "prefix": "ngx",
       "schematics": {
-	"@schematics/angular:component": {
-	  "styleext": "scss"
+        "@schematics/angular:component": {
+          "styleext": "scss"
         }
       },
       "architect": {

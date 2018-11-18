@@ -1,17 +1,17 @@
 <div>{{title}} demo
-  <div appMathJax>test
+  <div mathjax>test
     $$
     x = 3
     $$
   </div>
 
-  <div appMathJax>test2
+  <div mathjax>test2
     \( y = 3 \)
   </div>
 
   <div>
     <button (click)="show = !show">show/hide</button>
-    <div *ngIf="show" appMathJax>
+    <div *ngIf="show" mathjax>
 
       $$
       z = y
