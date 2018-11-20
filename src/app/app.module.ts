@@ -3,6 +3,7 @@ import {NgModule} from '@angular/core';
 
 import {AppComponent} from './app.component';
 import {MathJaxModule} from './math-jax/math-jax.module';
+import {FormsModule} from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -10,6 +11,7 @@ import {MathJaxModule} from './math-jax/math-jax.module';
   ],
   imports: [
     BrowserModule,
+    FormsModule,
     MathJaxModule.config()
   ],
   providers: [],

@@ -6,6 +6,7 @@ import {Component} from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  show = false;
   title = 'ngx-mathjax';
+  texOriginal = 'E = mc^2';
+  show = true;
 }
