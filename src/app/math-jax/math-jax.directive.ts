@@ -1,16 +1,15 @@
-import {AfterViewInit, Directive, ElementRef, OnDestroy} from '@angular/core';
-import {Observable, Subscription} from 'rxjs';
+import {AfterViewInit, Directive, ElementRef} from '@angular/core';
+import {Observable} from 'rxjs';
 import {MathJaxService} from './math-jax.service';
 
 
 @Directive({
   selector: 'mathjax, [mathjax]'
 })
-export class MathJaxDirective implements AfterViewInit, OnDestroy {
+export class MathJaxDirective implements AfterViewInit {
 
-  private readonly _mathJaxHub$: Observable<MathJax.Hub>;
+  private readonly _mathJaxHub$: Observable<any>;
   private readonly _el: HTMLElement;
-  private _sub: Subscription;
 
   constructor(el: ElementRef, service: MathJaxService) {
     this._mathJaxHub$ = service.MathJaxHub$;
@@ -18,15 +17,9 @@ export class MathJaxDirective implements AfterViewInit, OnDestroy {
   }
 
   ngAfterViewInit(): void {
-    this._sub = this._mathJaxHub$.subscribe(hub => {
-      hub.Queue(['Typeset', hub, this._el]);
+    this._mathJaxHub$.subscribe(() => {
+      MathJax.Hub.Queue(['Typeset', MathJax.Hub, this._el]);
     });
-  }
-
-  ngOnDestroy(): void {
-    if (this._sub !== undefined) {
-      this._sub.unsubscribe();
-    }
   }
 
 }

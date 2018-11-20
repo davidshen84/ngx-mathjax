@@ -31,8 +31,8 @@ export class MathJaxModule {
     /**
      * Define the {Subject} and {Observable} for the MathJax library.
      */
-    const mathJaxHubSubject = service.MathJaxHubSubject;
-    window.mathJaxHubSubject = mathJaxHubSubject;
+    const mathJaxHub$ = service.MathJaxHub$;
+    window.mathJaxHub$ = mathJaxHub$;
     const document = window.document;
 
     /**
@@ -42,7 +42,10 @@ export class MathJaxModule {
       MathJax.Hub.Config({
         skipStartupTypeset: true
       });
-      MathJax.Hub.Register.StartupHook('End', () => mathJaxHubSubject.next(MathJax.Hub));
+      MathJax.Hub.Register.StartupHook('End', () => {
+        mathJaxHub$.next();
+        mathJaxHub$.complete();
+      });
     }).toString();
 
     /**
