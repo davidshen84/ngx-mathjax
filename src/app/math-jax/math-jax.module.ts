@@ -14,6 +14,11 @@ export class ModuleConfiguration {
    * The config name of the MathJax library.
    */
   config: string;
+
+  /**
+   * MathJax CDN hostname.
+   */
+  hostname: string;
 }
 
 
@@ -61,16 +66,20 @@ export class MathJaxModule {
     /**
      * Insert the script block to load the MathJax library.
      */
-    (function (version: string, config: string) {
+    (function (version: string, config: string, hostname: string) {
       const script = document.createElement('script') as HTMLScriptElement;
       script.type = 'text/javascript';
-      script.src = `https://cdnjs.cloudflare.com/ajax/libs/mathjax/${version}/MathJax.js?config=${config}`;
+      script.src = `https://${hostname}/ajax/libs/mathjax/${version}/MathJax.js?config=${config}`;
       script.async = true;
       document.getElementsByTagName('head')[0].appendChild(script);
-    })(moduleConfig.version, moduleConfig.config);
+    })(moduleConfig.version, moduleConfig.config, moduleConfig.hostname);
   }
 
-  public static config(moduleConfiguration: ModuleConfiguration = {version: '2.7.5', config: 'TeX-AMS_CHTML'}): ModuleWithProviders {
+  public static config(moduleConfiguration: ModuleConfiguration = {
+    version: '2.7.5',
+    config: 'TeX-AMS_HTML',
+    hostname: 'cdnjs.cloudflare.com'
+  }): ModuleWithProviders {
     return {
       ngModule: MathJaxModule,
       providers: [{provide: ModuleConfiguration, useValue: moduleConfiguration},

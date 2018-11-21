@@ -2,10 +2,7 @@ import {AfterViewInit, Directive, ElementRef, Input, OnChanges, OnDestroy, Simpl
 import {Observable, ReplaySubject, Subject, Subscription} from 'rxjs';
 import {MathJaxService} from './math-jax.service';
 import {filter, map, switchMap} from 'rxjs/operators';
-import {tag} from 'rxjs-spy/operators';
-import {create} from 'rxjs-spy';
 
-create();
 
 @Directive({
   selector: 'mathjax, [mathjax]'
@@ -27,12 +24,12 @@ export class MathJaxDirective implements AfterViewInit, OnChanges, OnDestroy {
   /**
    * Observes the change of the @member {_expression}.
    */
-  private _change$ = new ReplaySubject<string>().pipe(tag('change$')) as Subject<string>;
+  private _change$ = new ReplaySubject<string>() as Subject<string>;
 
   /**
    * Observes when the initial MathJax typesetting is finished.
    */
-  private _typeset$ = new Subject<any>().pipe(tag('typeset$'));
+  private _typeset$ = new Subject<any>();
   private _subscription: Subscription;
 
   constructor(el: ElementRef, service: MathJaxService) {

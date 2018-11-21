@@ -1,6 +1,6 @@
 import {Observable} from 'rxjs';
 
-// noinspection TsLint
+/* tslint:disable:class-name */
 /**
  * Define MathJax related properties on the {Window} class.
  */
