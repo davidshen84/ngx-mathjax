@@ -3,7 +3,9 @@ import {Observable, ReplaySubject, Subject, Subscription} from 'rxjs';
 import {MathJaxService} from './math-jax.service';
 import {filter, map, switchMap} from 'rxjs/operators';
 
-
+/**
+ * Typeset the content or the expressing using MathJax library.
+ */
 @Directive({
   selector: 'mathjax, [mathjax]'
 })
@@ -22,12 +24,12 @@ export class MathJaxDirective implements AfterViewInit, OnChanges, OnDestroy {
   private _expression: string;
 
   /**
-   * Observes the change of the @member {_expression}.
+   * Observes the change of the input expression.
    */
-  private _change$ = new ReplaySubject<string>() as Subject<string>;
+  private _change$: Subject<any> = new ReplaySubject<string>();
 
   /**
-   * Observes when the initial MathJax typesetting is finished.
+   * Observes the completion of the initial MathJax typesetting.
    */
   private _typeset$ = new Subject<any>();
   private _subscription: Subscription;

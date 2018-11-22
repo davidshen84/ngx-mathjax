@@ -5,6 +5,9 @@ import {AppComponent} from './app.component';
 import {MathJaxModule} from './math-jax/math-jax.module';
 import {FormsModule} from '@angular/forms';
 
+/**
+ * @ignore
+ */
 @NgModule({
   declarations: [
     AppComponent

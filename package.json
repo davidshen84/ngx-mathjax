@@ -21,7 +21,8 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "packagr": "ng-packagr -p package.json"
+    "packagr": "ng-packagr -p package.json",
+    "docs": "compodoc -p src/tsconfig.app.json"
   },
   "ngPackage": {
     "lib": {
@@ -47,6 +48,7 @@
     "@angular/platform-browser": "~7.0.0",
     "@angular/platform-browser-dynamic": "~7.0.0",
     "@angular/router": "~7.0.0",
+    "@compodoc/compodoc": "^1.1.6",
     "@types/jasmine": "~2.8.8",
     "@types/jasminewd2": "~2.0.3",
     "@types/mathjax": "0.0.35",
@@ -62,8 +64,8 @@
     "karma-jasmine-html-reporter": "^0.2.2",
     "ng-packagr": "^4.4.0",
     "protractor": "~5.4.0",
-    "rxjs-spy": "^7.3.0",
     "rxjs": "^6.0.0",
+    "rxjs-spy": "^7.3.0",
     "ts-node": "~7.0.0",
     "tsickle": "^0.34.0",
     "tslint": "~5.11.0",
