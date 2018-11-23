@@ -65,12 +65,14 @@ $$
 
 ## Typesetting using expression
 
-The **first** Jax element will be updated as the value of `exp` changes.
+The Jax elements will be updated when the corresponding expression value is changed.
+The correspondence principle between the expression and the Jax element is by *order*.
 
 ```html
-<div [mathjax]="exp">
+<div [mathjax]="[exp1, exp2]">
 
-MathJax: \( {{ '{}' }} \)
+MathJax Expression 1: \( {{ '{}' }} \)
+MathJax Expression 2: \( {{ '{}' }} \)
 </div>
 ```
 
@@ -80,8 +82,7 @@ You need to escape it in Angular template.
 
 ## TODO
 
-1. Customize typesetting interval.
-2. Generate JSDoc.
+*empty*
 
 
 [1]: https://www.mathjax.org/

@@ -19,9 +19,17 @@
 <div>
   <h3>Dynamic typeset</h3>
   <form #myform="ngForm">
-    <textarea [(ngModel)]="texOriginal" name="texOriginal"></textarea>
-    <div #jax [mathjax]="texOriginal">
-      <div> Fact: \( {{ '{}' }} \)</div>
+    <label>
+      Exp1:
+      <input [(ngModel)]="exp1" name="exp1" />
+    </label>
+    <label>
+      Exp2:
+      <input [(ngModel)]="exp2" name="exp2" />
+    </label>
+    <div #jax [mathjax]="[exp1, exp2]">
+      <div> Exp1: \( {{ '{}' }} \)</div>
+      <div> Exp2: $$ {{ '{}' }} $$</div>
     </div>
   </form>
 </div>

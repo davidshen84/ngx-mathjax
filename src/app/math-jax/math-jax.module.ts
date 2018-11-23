@@ -6,6 +6,14 @@ import {MathJaxService} from './math-jax.service';
 
 /**
  * Module configuration class.
+ *
+ * @author davidshen84
+ * @example
+ * {
+ *    version: '2.7.5',
+ *    config: 'TeX-AMS_HTML',
+ *    hostname: 'cdnjs.cloudflare.com'
+ * }
  */
 export class ModuleConfiguration {
   /**
@@ -26,7 +34,16 @@ export class ModuleConfiguration {
 }
 
 /**
- * You should always use the  `config` static method to provide a configuration to the module.
+ * Module to load and configure the MathJax library.
+ *
+ * @author davidshen84
+ * @example
+ * MathJaxModule.config(
+ * {
+ *    version: '2.7.5',
+ *    config: 'TeX-AMS_HTML',
+ *    hostname: 'cdnjs.cloudflare.com'
+ * })
  */
 @NgModule({
   declarations: [MathJaxDirective],
