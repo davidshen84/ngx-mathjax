@@ -1,18 +1,22 @@
+/**
+ * @author davidshen84
+ */
+
 import {ModuleWithProviders, NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {MathJaxDirective} from './math-jax.directive';
-import {_Window} from './domain/window';
 import {MathJaxService} from './math-jax.service';
+
 
 /**
  * Module configuration class.
  *
- * @author davidshen84
  * @example
+ *
  * {
- *    version: '2.7.5',
- *    config: 'TeX-AMS_HTML',
- *    hostname: 'cdnjs.cloudflare.com'
+ *   version: '2.7.5',
+ *   config: 'TeX-AMS_HTML',
+ *   hostname: 'cdnjs.cloudflare.com'
  * }
  */
 export class ModuleConfiguration {
@@ -36,13 +40,13 @@ export class ModuleConfiguration {
 /**
  * Module to load and configure the MathJax library.
  *
- * @author davidshen84
  * @example
+ *
  * MathJaxModule.config(
  * {
- *    version: '2.7.5',
- *    config: 'TeX-AMS_HTML',
- *    hostname: 'cdnjs.cloudflare.com'
+ *     version: '2.7.5',
+ *     config: 'TeX-AMS_HTML',
+ *     hostname: 'cdnjs.cloudflare.com'
  * })
  */
 @NgModule({
@@ -54,14 +58,7 @@ export class ModuleConfiguration {
 })
 export class MathJaxModule {
 
-  constructor(moduleConfig: ModuleConfiguration, window: _Window, service: MathJaxService) {
-
-    /**
-     * Define the {Subject} and {Observable} for the MathJax library.
-     */
-    const mathJaxHub$ = service.MathJaxHub$;
-    window.mathJaxHub$ = mathJaxHub$;
-    const document = window.document;
+  constructor(moduleConfig: ModuleConfiguration) {
 
     /**
      * Define the **function string** to be inserted into the mathjax configuration script block.
@@ -71,8 +68,8 @@ export class MathJaxModule {
         skipStartupTypeset: true
       });
       MathJax.Hub.Register.StartupHook('End', () => {
-        mathJaxHub$.next();
-        mathJaxHub$.complete();
+        window.mathJaxHub$.next();
+        window.mathJaxHub$.complete();
       });
     }).toString();
 
@@ -106,8 +103,8 @@ export class MathJaxModule {
     return {
       ngModule: MathJaxModule,
       providers: [{provide: ModuleConfiguration, useValue: moduleConfiguration},
-        {provide: _Window, useValue: window},
-        {provide: MathJaxService, useClass: MathJaxService}]
+        {provide: MathJaxService, useClass: MathJaxService},
+      ]
     };
   }
 

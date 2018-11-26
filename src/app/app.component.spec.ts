@@ -2,7 +2,6 @@ import {async, TestBed} from '@angular/core/testing';
 import {AppComponent} from './app.component';
 import {FormsModule} from '@angular/forms';
 import {MathJaxModule} from './math-jax/math-jax.module';
-import {_Window} from './math-jax/domain/window';
 
 describe('AppComponent', () => {
   beforeEach(async(() => {
@@ -13,20 +12,6 @@ describe('AppComponent', () => {
       imports: [
         FormsModule,
         MathJaxModule.config()
-      ],
-      providers: [
-        {
-          provide: _Window, useValue: {
-            document: {
-              createElement: () => ({}),
-              getElementsByTagName: () => [
-                {
-                  appendChild: () => null
-                }
-              ]
-            }
-          }
-        }
       ]
     }).compileComponents();
   }));

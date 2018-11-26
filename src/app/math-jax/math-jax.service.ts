@@ -1,5 +1,17 @@
 import {Injectable} from '@angular/core';
-import {ReplaySubject} from 'rxjs';
+import {ReplaySubject, Subject} from 'rxjs';
+
+/**
+ * Defines global variables on the `window` object.
+ */
+declare global {
+  interface Window {
+    /**
+     * Subject to notify the readiness of the MathJax namespace.
+     */
+    mathJaxHub$: Subject<any>;
+  }
+}
 
 /**
  * A internal utility service.
@@ -11,5 +23,12 @@ export class MathJaxService {
    * Signals when the MathJax object is ready.
    */
   public readonly MathJaxHub$ = new ReplaySubject<any>();
+
+  constructor() {
+    /**
+     * Create a global variable.
+     */
+    window.mathJaxHub$ = this.MathJaxHub$;
+  }
 
 }

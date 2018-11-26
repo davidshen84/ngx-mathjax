@@ -1,3 +1,6 @@
+/**
+ * @author davidshen84
+ */
 import {UpdateValue} from './domain/interfaces';
 import {AfterViewInit, Directive, ElementRef, Input, OnChanges, OnDestroy, SimpleChanges} from '@angular/core';
 import {Observable, ReplaySubject, Subject, Subscription} from 'rxjs';
@@ -5,9 +8,7 @@ import {MathJaxService} from './math-jax.service';
 import {map, switchMap} from 'rxjs/operators';
 
 /**
- * Typeset the content or the expressing using MathJax library.
- *
- * @author davidshen84
+ * Typeset the content or expressions using MathJax library.
  */
 @Directive({
   selector: 'mathjax, [mathjax]'
