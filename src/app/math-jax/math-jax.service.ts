@@ -24,11 +24,15 @@ export class MathJaxService {
    */
   public readonly MathJaxHub$ = new ReplaySubject<any>();
 
-  constructor() {
+  /**
+   * Must call `init` method explicitly during module initialization.
+   */
+  public init(): void {
     /**
      * Create a global variable.
      */
     window.mathJaxHub$ = this.MathJaxHub$;
+
   }
 
 }

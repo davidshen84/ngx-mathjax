@@ -58,7 +58,8 @@ export class ModuleConfiguration {
 })
 export class MathJaxModule {
 
-  constructor(moduleConfig: ModuleConfiguration) {
+  constructor(moduleConfig: ModuleConfiguration, service: MathJaxService) {
+    service.init();
 
     /**
      * Define the **function string** to be inserted into the mathjax configuration script block.
@@ -103,7 +104,7 @@ export class MathJaxModule {
     return {
       ngModule: MathJaxModule,
       providers: [{provide: ModuleConfiguration, useValue: moduleConfiguration},
-        {provide: MathJaxService, useClass: MathJaxService},
+        {provide: MathJaxService, useClass: MathJaxService}
       ]
     };
   }
