@@ -3,9 +3,10 @@
  */
 import {UpdateValue} from './domain/interfaces';
 import {AfterViewInit, Directive, ElementRef, Input, OnChanges, OnDestroy, SimpleChanges} from '@angular/core';
-import {Observable, ReplaySubject, Subject, Subscription} from 'rxjs';
+import {combineLatest, Observable, ReplaySubject, Subject, Subscription} from 'rxjs';
 import {MathJaxService} from './math-jax.service';
-import {map, switchMap} from 'rxjs/operators';
+import {map} from 'rxjs/operators';
+
 
 /**
  * Typeset the content or expressions using MathJax library.
@@ -15,60 +16,65 @@ import {map, switchMap} from 'rxjs/operators';
 })
 export class MathJaxDirective implements AfterViewInit, OnChanges, OnDestroy {
 
-  private readonly _mathJaxHub$: Observable<any>;
+  private readonly mathJaxHub$: Observable<any>;
   /**
    * The associated native element.
    */
-  private readonly _el: HTMLElement;
+  private readonly element: HTMLElement;
 
   /**
    * An array of input MathJax expressions.
    */
   @Input('mathjax')
-  private _expressions: string;
+  private mathJaxExpressions: string[];
 
   /**
    * Observes the change of the input expression.
    */
-  private _change$ = new ReplaySubject<UpdateValue<string>[]>();
+  private expressionChange$ = new ReplaySubject<UpdateValue<string>[]>();
 
   /**
    * Observes the completion of the initial MathJax typesetting.
    */
-  private _typeset$ = new Subject<any>();
-  private _subscription: Subscription;
+  private mathJaxTypeset$ = new Subject<any>();
+  private expressionChangeSubscription: Subscription;
+  private hubSubscription: Subscription;
+  private isDestroying: boolean;
 
   constructor(el: ElementRef, service: MathJaxService) {
-    this._mathJaxHub$ = service.MathJaxHub$;
-    this._el = el.nativeElement;
+    this.mathJaxHub$ = service.MathJaxHub$;
+    this.element = el.nativeElement;
 
-    this._subscription = this._mathJaxHub$.pipe(
-      switchMap(() => this.jax$),
-      switchMap(jax => this._change$.pipe(
-        map(updateValue => ({updateValue, jax}))))
-    ).subscribe(({updateValue, jax}) =>
-      updateValue.forEach(v => MathJax.Hub.Queue(['Text', jax[v.order], v.value])));
+
+    this.expressionChangeSubscription = combineLatest([this.mathJaxHub$, this.jax$, this.expressionChange$])
+      .subscribe(([_, jax, updateValue]) =>
+        updateValue.forEach(v => MathJax.Hub.Queue(() => {
+          // Stop pushing messages to the queue when the component is being destroyed.
+          if (!this.isDestroying) {
+            return jax[v.order].Text(v.value);
+          }
+        })));
   }
 
   /**
    * @returns All the Jax elements.
    */
   private get jax$(): Observable<MathJax.ElementJax[]> {
-    return this._typeset$.pipe(
-      map(() => MathJax.Hub.getAllJax(this._el))
+    return this.mathJaxTypeset$.pipe(
+      map(() => MathJax.Hub.getAllJax(this.element))
     );
   }
 
   ngAfterViewInit(): void {
-    this._mathJaxHub$.subscribe(() => {
-      MathJax.Hub.Queue(['Typeset', MathJax.Hub, this._el]);
-      MathJax.Hub.Queue(['next', this._typeset$]);
-      MathJax.Hub.Queue(['complete', this._typeset$]);
+    this.hubSubscription = this.mathJaxHub$.subscribe(() => {
+      MathJax.Hub.Queue(['Typeset', MathJax.Hub, this.element]);
+      MathJax.Hub.Queue(['next', this.mathJaxTypeset$]);
+      MathJax.Hub.Queue(['complete', this.mathJaxTypeset$]);
     });
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    const expressions = changes['_expressions'];
+    const expressions = changes.mathJaxExpressions;
 
     // Shortcut if there's nothing to update.
     if (!(expressions.currentValue instanceof Array)) {
@@ -85,11 +91,13 @@ export class MathJaxDirective implements AfterViewInit, OnChanges, OnDestroy {
           }
           : undefined)
       .filter(v => v);
-    this._change$.next(updateValues);
+    this.expressionChange$.next(updateValues);
   }
 
   ngOnDestroy(): void {
-    this._change$.complete();
-    this._subscription.unsubscribe();
+    this.isDestroying = true;
+    this.expressionChangeSubscription.unsubscribe();
+    this.hubSubscription.unsubscribe();
+    this.expressionChange$.complete();
   }
 }

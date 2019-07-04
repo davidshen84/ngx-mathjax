@@ -10,7 +10,4 @@ import {Component} from '@angular/core';
 })
 export class AppComponent {
   title = 'ngx-mathjax';
-  show = true;
-  exp1 = 'E = mc^2';
-  exp2 = 'x = 1';
 }

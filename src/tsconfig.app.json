@@ -6,6 +6,9 @@
   },
   "exclude": [
     "test.ts",
-    "**/*.spec.ts"
+    "**/*.spec.ts",
+    "app/app-routing.module.ts",
+    "app/demo/*",
+    "app/dummy/*"
   ]
 }

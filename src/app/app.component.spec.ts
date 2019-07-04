@@ -2,16 +2,23 @@ import {async, TestBed} from '@angular/core/testing';
 import {AppComponent} from './app.component';
 import {FormsModule} from '@angular/forms';
 import {MathJaxModule} from './math-jax/math-jax.module';
+import {RouterTestingModule} from '@angular/router/testing';
+import {routes} from './app-routing.module';
+import {DemoComponent} from './demo/demo.component';
+import {DummyComponent} from './dummy/dummy.component';
 
 describe('AppComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [
-        AppComponent
+        AppComponent,
+        DemoComponent,
+        DummyComponent
       ],
       imports: [
         FormsModule,
-        MathJaxModule.config()
+        MathJaxModule.config(),
+        RouterTestingModule.withRoutes(routes)
       ]
     }).compileComponents();
   }));
@@ -29,7 +36,7 @@ describe('AppComponent', () => {
   });
 
   it('should render two elements with mathjax directive', () => {
-    const fixture = TestBed.createComponent(AppComponent);
+    const fixture = TestBed.createComponent(DemoComponent);
     fixture.detectChanges();
     const compiled = fixture.debugElement.nativeElement;
     expect(compiled.querySelectorAll('div[mathjax]').length).toEqual(2);
