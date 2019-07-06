@@ -87,5 +87,5 @@ You need to escape it in Angular template.
 
 [1]: https://www.mathjax.org/
 [2]: https://angular.io/
-[3]: https://circleci.com/gh/davidshen84/davidshen84.github.io.svg?style=svg
-[4]: https://circleci.com/gh/davidshen84/davidshen84.github.io
+[3]: https://circleci.com/gh/davidshen84/ngx-mathjax.svg?style=svg
+[4]: https://circleci.com/gh/davidshen84/ngx-mathjax
