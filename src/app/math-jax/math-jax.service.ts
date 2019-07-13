@@ -1,5 +1,5 @@
-import {Injectable} from '@angular/core';
-import {ReplaySubject, Subject} from 'rxjs';
+import { Injectable } from '@angular/core';
+import { ReplaySubject, Subject } from 'rxjs';
 
 /**
  * Defines global variables on the `window` object.

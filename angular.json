@@ -7,7 +7,7 @@
       "root": "",
       "sourceRoot": "src",
       "projectType": "application",
-      "prefix": "ngx",
+      "prefix": "mathjax",
       "schematics": {
         "@schematics/angular:component": {
           "styleext": "scss"
@@ -29,7 +29,10 @@
             "styles": [
               "src/styles.scss"
             ],
-            "scripts": []
+            "scripts": [
+              "node_modules/marked/lib/marked.js"
+            ],
+            "aot": true
           },
           "configurations": {
             "production": {

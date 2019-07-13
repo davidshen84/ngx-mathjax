@@ -1,5 +1,5 @@
-import {MathJaxDirective} from './math-jax.directive';
-import {MathJaxService} from './math-jax.service';
+import { MathJaxDirective } from './math-jax.directive';
+import { MathJaxService } from './math-jax.service';
 
 
 describe('MathJaxDirective', () => {

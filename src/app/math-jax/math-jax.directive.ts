@@ -1,11 +1,11 @@
 /**
  * @author davidshen84
  */
-import {UpdateValue} from './domain/interfaces';
-import {AfterViewInit, Directive, ElementRef, Input, OnChanges, OnDestroy, SimpleChanges} from '@angular/core';
-import {combineLatest, Observable, ReplaySubject, Subject, Subscription} from 'rxjs';
-import {MathJaxService} from './math-jax.service';
-import {map} from 'rxjs/operators';
+import { UpdateValue } from './domain/interfaces';
+import { AfterViewInit, Directive, ElementRef, Input, OnChanges, OnDestroy, SimpleChanges } from '@angular/core';
+import { combineLatest, Observable, ReplaySubject, Subject, Subscription } from 'rxjs';
+import { MathJaxService } from './math-jax.service';
+import { map } from 'rxjs/operators';
 
 
 /**
@@ -16,18 +16,16 @@ import {map} from 'rxjs/operators';
 })
 export class MathJaxDirective implements AfterViewInit, OnChanges, OnDestroy {
 
+  /**
+   * An array of input MathJax expressions.
+   */
+  @Input('mathjax')
+  public MathJaxExpressions: string[];
   private readonly mathJaxHub$: Observable<any>;
   /**
    * The associated native element.
    */
   private readonly element: HTMLElement;
-
-  /**
-   * An array of input MathJax expressions.
-   */
-  @Input('mathjax')
-  private mathJaxExpressions: string[];
-
   /**
    * Observes the change of the input expression.
    */
@@ -74,7 +72,7 @@ export class MathJaxDirective implements AfterViewInit, OnChanges, OnDestroy {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    const expressions = changes.mathJaxExpressions;
+    const expressions = changes.MathJaxExpressions;
 
     // Shortcut if there's nothing to update.
     if (!(expressions.currentValue instanceof Array)) {

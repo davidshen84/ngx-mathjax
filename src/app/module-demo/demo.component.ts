@@ -3,23 +3,19 @@ import { Component, OnInit } from '@angular/core';
 @Component({
   selector: 'mathjax-demo',
   template: `
-    <div>
-      <h2>Math Equation</h2>
-      <div mathjax *ngIf="show">
-        Fact:
-        $$
-        E = mc^2
-        $$
-      </div>
-    </div>
+    This dummy module is used to test the Module configuration inside a child module.
+    <markdown preserveWhitespaces mathjax>
+      # Title
 
-    <div>
-      <h2>Math inline</h2>
-      <div mathjax>
-        Fact: \\( E = mc^2 \\)
-      </div>
-    </div>
 
+      *markdown*
+
+      $$
+      mathjax = 1
+      $$
+
+      More math: \\( E = mc^2 \\)
+    </markdown>
     <div>
       <h3>Dynamic typeset</h3>
       <form #myform="ngForm">
@@ -37,14 +33,10 @@ import { Component, OnInit } from '@angular/core';
         </div>
       </form>
     </div>
-
-    <button (click)="show = !show">Hide/Show</button>
   `,
   styles: []
 })
 export class DemoComponent implements OnInit {
-
-  show = true;
   exp1 = 'E = mc^2';
   exp2 = 'x = 1';
 

@@ -2,10 +2,10 @@
  * @author davidshen84
  */
 
-import {ModuleWithProviders, NgModule} from '@angular/core';
-import {CommonModule} from '@angular/common';
-import {MathJaxDirective} from './math-jax.directive';
-import {MathJaxService} from './math-jax.service';
+import { ModuleWithProviders, NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { MathJaxDirective } from './math-jax.directive';
+import { MathJaxService } from './math-jax.service';
 
 
 /**
@@ -58,7 +58,7 @@ export class ModuleConfiguration {
 })
 export class MathJaxModule {
 
-  constructor(moduleConfig: ModuleConfiguration, service: MathJaxService) {
+  constructor(service: MathJaxService, moduleConfig?: ModuleConfiguration) {
     service.init();
 
     /**
@@ -74,39 +74,49 @@ export class MathJaxModule {
       });
     }).toString();
 
-    /**
-     * Insert the MathJax configuration script into the Head element.
-     */
-    (function () {
-      const script = document.createElement('script') as HTMLScriptElement;
-      script.type = 'text/x-mathjax-config';
-      script.text = `(${mathJaxHubConfig})();`;
-      document.getElementsByTagName('head')[0].appendChild(script);
-    })();
+    if (moduleConfig) {
+      /**
+       * Insert the MathJax configuration script into the Head element.
+       */
+      (function () {
+        const script = document.createElement('script') as HTMLScriptElement;
+        script.type = 'text/x-mathjax-config';
+        script.text = `(${mathJaxHubConfig})();`;
+        document.getElementsByTagName('head')[0].appendChild(script);
+      })();
 
-    /**
-     * Insert the script block to load the MathJax library.
-     */
-    (function (version: string, config: string, hostname: string) {
-      const script = document.createElement('script') as HTMLScriptElement;
-      script.type = 'text/javascript';
-      script.src = `https://${hostname}/ajax/libs/mathjax/${version}/MathJax.js?config=${config}`;
-      script.async = true;
-      document.getElementsByTagName('head')[0].appendChild(script);
-    })(moduleConfig.version, moduleConfig.config, moduleConfig.hostname);
+      /**
+       * Insert the script block to load the MathJax library.
+       */
+      (function (version: string, config: string, hostname: string) {
+        const script = document.createElement('script') as HTMLScriptElement;
+        script.type = 'text/javascript';
+        script.src = `https://${hostname}/ajax/libs/mathjax/${version}/MathJax.js?config=${config}`;
+        script.async = true;
+        document.getElementsByTagName('head')[0].appendChild(script);
+      })(moduleConfig.version, moduleConfig.config, moduleConfig.hostname);
+    }
   }
 
-  public static config(moduleConfiguration: ModuleConfiguration = {
+  /**
+   * Configure the provider for hte module.
+   *
+   * @param forRoot Make sure it is set to `true` for the root module and `false` for any child module.
+   * @param moduleConfiguration A {ModuleConfiguration} instance.
+   */
+  public static config(forRoot: boolean = true, moduleConfiguration: ModuleConfiguration = {
     version: '2.7.5',
     config: 'TeX-AMS_HTML',
     hostname: 'cdnjs.cloudflare.com'
   }): ModuleWithProviders {
-    return {
+    return forRoot ? {
       ngModule: MathJaxModule,
-      providers: [{provide: ModuleConfiguration, useValue: moduleConfiguration},
-        {provide: MathJaxService, useClass: MathJaxService}
+      providers: [
+        {provide: ModuleConfiguration, useValue: moduleConfiguration},
+        {provide: MathJaxService, useClass: MathJaxService},
       ]
+    } : {
+      ngModule: MathJaxModule
     };
   }
-
 }
