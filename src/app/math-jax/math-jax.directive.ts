@@ -15,7 +15,6 @@ import { map } from 'rxjs/operators';
   selector: 'mathjax, [mathjax]'
 })
 export class MathJaxDirective implements AfterViewInit, OnChanges, OnDestroy {
-
   /**
    * An array of input MathJax expressions.
    */
@@ -29,13 +28,16 @@ export class MathJaxDirective implements AfterViewInit, OnChanges, OnDestroy {
   /**
    * Observes the change of the input expression.
    */
-  private expressionChange$ = new ReplaySubject<UpdateValue<string>[]>();
-
+  private expressionChangeSubject = new ReplaySubject<UpdateValue<string>[]>();
   /**
    * Observes the completion of the initial MathJax typesetting.
    */
-  private mathJaxTypeset$ = new Subject<any>();
-  private expressionChangeSubscription: Subscription;
+  private readonly mathJaxTypeset$ = new Subject<any>();
+  private readonly expressionChangeSubscription: Subscription;
+  /**
+   * Observe the readiness of all the Jax instances in the element.
+   */
+  private readonly allJax$: Observable<any[]>;
   private hubSubscription: Subscription;
   private isDestroying: boolean;
 
@@ -43,9 +45,12 @@ export class MathJaxDirective implements AfterViewInit, OnChanges, OnDestroy {
     this.mathJaxHub$ = service.MathJaxHub$;
     this.element = el.nativeElement;
 
+    this.allJax$ = combineLatest([this.mathJaxHub$, this.mathJaxTypeset$]).pipe(
+      map(() => MathJax.Hub.getAllJax(this.element))
+    );
 
-    this.expressionChangeSubscription = combineLatest([this.mathJaxHub$, this.jax$, this.expressionChange$])
-      .subscribe(([_, jax, updateValue]) =>
+    this.expressionChangeSubscription = combineLatest([this.mathJaxHub$, this.allJax$, this.expressionChangeSubject])
+      .subscribe(([ignore, jax, updateValue]) =>
         updateValue.forEach(v => MathJax.Hub.Queue(() => {
           // Stop pushing messages to the queue when the component is being destroyed.
           if (!this.isDestroying) {
@@ -54,21 +59,21 @@ export class MathJaxDirective implements AfterViewInit, OnChanges, OnDestroy {
         })));
   }
 
-  /**
-   * @returns All the Jax elements.
-   */
-  private get jax$(): Observable<MathJax.ElementJax[]> {
-    return this.mathJaxTypeset$.pipe(
-      map(() => MathJax.Hub.getAllJax(this.element))
-    );
+  ngAfterViewInit(): void {
+    this.hubSubscription = this.mathJaxHub$
+      .subscribe(() => {
+        MathJax.Hub.Queue(['Typeset', MathJax.Hub, this.element]);
+        MathJax.Hub.Queue(['next', this.mathJaxTypeset$]);
+      });
   }
 
-  ngAfterViewInit(): void {
-    this.hubSubscription = this.mathJaxHub$.subscribe(() => {
-      MathJax.Hub.Queue(['Typeset', MathJax.Hub, this.element]);
-      MathJax.Hub.Queue(['next', this.mathJaxTypeset$]);
-      MathJax.Hub.Queue(['complete', this.mathJaxTypeset$]);
-    });
+  /**
+   * Explicitly trigger the MathJax typeset process.
+   *
+   * This is useful if the content is loaded dynamically.
+   */
+  MathJaxTypeset(): void {
+    this.mathJaxTypeset$.next();
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -89,13 +94,13 @@ export class MathJaxDirective implements AfterViewInit, OnChanges, OnDestroy {
           }
           : undefined)
       .filter(v => v);
-    this.expressionChange$.next(updateValues);
+    this.expressionChangeSubject.next(updateValues);
   }
 
   ngOnDestroy(): void {
     this.isDestroying = true;
     this.expressionChangeSubscription.unsubscribe();
     this.hubSubscription.unsubscribe();
-    this.expressionChange$.complete();
+    this.expressionChangeSubject.complete();
   }
 }

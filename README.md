@@ -93,6 +93,15 @@ Insert the `{}` to the place you want, then surround it with a pair of MathJax d
 
 You need to escape it in Angular template.
 
+## Manually trigger MathJax typesetting
+
+You can use the `MathJaxDirective.MathJaxTypeset()` method to trigger
+the typesetting when you want. The steps are:
+
+- Use *ViewChild* and its *read* property to get a reference to the
+  `MathJaxDirective` instance
+- Call `instance.MathJaxTypeset()`
+
 ## TODO
 
 *empty*

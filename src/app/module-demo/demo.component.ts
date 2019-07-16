@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { MathJaxDirective } from '../math-jax/math-jax.directive';
 
 @Component({
   selector: 'mathjax-demo',
@@ -14,7 +15,7 @@ import { Component, OnInit } from '@angular/core';
       mathjax = 1
       $$
 
-      More math: \\( E = mc^2 \\)
+      More math: \\\\( E = mc^2 \\\\)
     </markdown>
     <div>
       <h3>Dynamic typeset</h3>
@@ -33,12 +34,16 @@ import { Component, OnInit } from '@angular/core';
         </div>
       </form>
     </div>
+    <markdown #mdSrc src="assets/demo.md" mathjax (load)="mdSrcMathJax.MathJaxTypeset()"></markdown>
   `,
   styles: []
 })
 export class DemoComponent implements OnInit {
   exp1 = 'E = mc^2';
   exp2 = 'x = 1';
+
+  @ViewChild('mdSrc', {read: MathJaxDirective, static: true})
+  mdSrcMathJax: MathJaxDirective;
 
   constructor() {
   }

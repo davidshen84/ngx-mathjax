@@ -6,6 +6,7 @@ import { DemoComponent } from './demo.component';
 import { MarkdownModule } from 'ngx-markdown';
 import { MathJaxModule } from '../math-jax/math-jax.module';
 import { FormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [DemoComponent],
@@ -14,7 +15,8 @@ import { FormsModule } from '@angular/forms';
     MathJaxModule.config(false),
     MarkdownModule.forChild(),
     ModuleDemoRoutingModule,
-    FormsModule
+    FormsModule,
+    HttpClientModule
   ]
 })
 export class ModuleDemoModule {
