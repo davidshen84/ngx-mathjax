@@ -32,12 +32,13 @@ export class MathJaxDirective implements AfterViewInit, OnChanges, OnDestroy {
   /**
    * Observes the completion of the initial MathJax typesetting.
    */
-  private readonly mathJaxTypeset$ = new Subject<any>();
+  private readonly mathJaxTypesetSubject = new Subject<any>();
   private readonly expressionChangeSubscription: Subscription;
   /**
    * Observe the readiness of all the Jax instances in the element.
    */
   private readonly allJax$: Observable<any[]>;
+  private readonly typesetSubscription: Subscription;
   private hubSubscription: Subscription;
   private isDestroying: boolean;
 
@@ -45,12 +46,17 @@ export class MathJaxDirective implements AfterViewInit, OnChanges, OnDestroy {
     this.mathJaxHub$ = service.MathJaxHub$;
     this.element = el.nativeElement;
 
-    this.allJax$ = combineLatest([this.mathJaxHub$, this.mathJaxTypeset$]).pipe(
+    this.typesetSubscription = combineLatest([this.mathJaxHub$, this.mathJaxTypesetSubject])
+      .subscribe(() => {
+        MathJax.Hub.Queue(['Typeset', MathJax.Hub, this.element]);
+      });
+
+    this.allJax$ = combineLatest([this.mathJaxHub$, this.mathJaxTypesetSubject]).pipe(
       map(() => MathJax.Hub.getAllJax(this.element))
     );
 
-    this.expressionChangeSubscription = combineLatest([this.mathJaxHub$, this.allJax$, this.expressionChangeSubject])
-      .subscribe(([ignore, jax, updateValue]) =>
+    this.expressionChangeSubscription = combineLatest([this.allJax$, this.expressionChangeSubject])
+      .subscribe(([jax, updateValue]) =>
         updateValue.forEach(v => MathJax.Hub.Queue(() => {
           // Stop pushing messages to the queue when the component is being destroyed.
           if (!this.isDestroying) {
@@ -63,7 +69,7 @@ export class MathJaxDirective implements AfterViewInit, OnChanges, OnDestroy {
     this.hubSubscription = this.mathJaxHub$
       .subscribe(() => {
         MathJax.Hub.Queue(['Typeset', MathJax.Hub, this.element]);
-        MathJax.Hub.Queue(['next', this.mathJaxTypeset$]);
+        MathJax.Hub.Queue(['MathJaxTypeset', this]);
       });
   }
 
@@ -73,7 +79,7 @@ export class MathJaxDirective implements AfterViewInit, OnChanges, OnDestroy {
    * This is useful if the content is loaded dynamically.
    */
   MathJaxTypeset(): void {
-    this.mathJaxTypeset$.next();
+    this.mathJaxTypesetSubject.next();
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -99,8 +105,12 @@ export class MathJaxDirective implements AfterViewInit, OnChanges, OnDestroy {
 
   ngOnDestroy(): void {
     this.isDestroying = true;
+
     this.expressionChangeSubscription.unsubscribe();
     this.hubSubscription.unsubscribe();
+    this.typesetSubscription.unsubscribe();
+
+    this.mathJaxTypesetSubject.complete();
     this.expressionChangeSubject.complete();
   }
 }
