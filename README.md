@@ -21,7 +21,8 @@ You need to pass a `ModuleConfiguration` instance to the `config` method to conf
 
 ### Example
  
-When importing in the root module.
+When importing in the **root** module, the module should be configured
+with *.forRoot* method.
 
 ```typescript
 import {NgModule} from '@angular/core';
@@ -33,7 +34,7 @@ import {MathJaxModule} from './src/app/math-jax/math-jax.module';
     AppComponent
   ],
   imports: [
-    MathJaxModule.config(true, {
+    MathJaxModule.forRoot({
       version: '2.7.5',
       config: 'TeX-AMS_HTML',
       hostname: 'cdnjs.cloudflare.com'
@@ -49,17 +50,20 @@ export class AppModule { }
 - `config` is the MathJax predefined configuration name.
 - `hostname` is the MathJax CDN hostname.
 
-When importing in a child module, the module must be configured to re-use the same module instance as the root module.
+When importing in a **child** module, the module must be configured to
+re-use the same module instance as the root module. So simply
+configure the module with the *.forChild* method.
 
 ```typescript
 import {MathJaxModule} from './src/app/math-jax/math-jax.module';
 
 ...
 imports: [
-  MathJaxModule.config(false)
+  MathJaxModule.forChild()
 ]
 ...
 ```
+
 ## Typeset an element
 
 Add the `mathjax` directive to elements which you want to apply MathJax typesetting on load.
