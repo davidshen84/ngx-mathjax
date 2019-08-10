@@ -18,7 +18,7 @@ describe('AppComponent', () => {
       ],
       imports: [
         FormsModule,
-        MathJaxModule.config(),
+        MathJaxModule.forRoot(),
         MarkdownModule.forRoot(),
         RouterTestingModule.withRoutes(routes)
       ]

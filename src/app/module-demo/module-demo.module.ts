@@ -12,7 +12,7 @@ import { HttpClientModule } from '@angular/common/http';
   declarations: [DemoComponent],
   imports: [
     CommonModule,
-    MathJaxModule.config(false),
+    MathJaxModule.forChild(),
     MarkdownModule.forChild(),
     ModuleDemoRoutingModule,
     FormsModule,

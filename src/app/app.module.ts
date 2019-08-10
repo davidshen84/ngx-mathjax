@@ -22,7 +22,7 @@ import { ModuleDemoModule } from './module-demo/module-demo.module';
   imports: [
     BrowserModule,
     FormsModule,
-    MathJaxModule.config(),
+    MathJaxModule.forRoot(),
     MarkdownModule.forRoot(),
     AppRoutingModule,
     ModuleDemoModule,

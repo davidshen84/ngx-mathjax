@@ -101,6 +101,7 @@ export class MathJaxModule {
   /**
    * Configure the provider for hte module.
    *
+   * @deprecated Use forRoot or forChild method instead.
    * @param forRoot Make sure it is set to `true` for the root module and `false` for any child module.
    * @param moduleConfiguration A {ModuleConfiguration} instance.
    */
@@ -116,6 +117,34 @@ export class MathJaxModule {
         {provide: MathJaxService, useClass: MathJaxService},
       ]
     } : {
+      ngModule: MathJaxModule
+    };
+  }
+
+  /**
+   * Configure the module for the root module.
+   *
+   * @param moduleConfiguration A {ModuleConfiguration} instance.
+   */
+  public static forRoot(moduleConfiguration: ModuleConfiguration = {
+    version: '2.7.5',
+    config: 'TeX-AMS_HTML',
+    hostname: 'cdnjs.cloudflare.com'
+  }): ModuleWithProviders<MathJaxModule> {
+    return {
+      ngModule: MathJaxModule,
+      providers: [
+        {provide: ModuleConfiguration, useValue: moduleConfiguration},
+        {provide: MathJaxService, useClass: MathJaxService},
+      ]
+    };
+  }
+
+  /**
+   * Configure the module for a child module.
+   */
+  public static forChild() {
+    return {
       ngModule: MathJaxModule
     };
   }
