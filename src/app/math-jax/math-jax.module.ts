@@ -66,7 +66,9 @@ export class MathJaxModule {
      */
     const mathJaxHubConfig = (() => {
       MathJax.Hub.Config({
-        skipStartupTypeset: true
+        skipStartupTypeset: true,
+        messageStyle: 'none',
+        tex2jax: {preview: 'none'}
       });
       MathJax.Hub.Register.StartupHook('End', () => {
         window.mathJaxHub$.next();
