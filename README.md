@@ -2,6 +2,11 @@
 
 Integrate [MathJax][3] with [Angular][4].
 
+**NOTE:** The MathJax v3 API is not fully componentized and some API
+features rely on the global library state. I found it is very
+difficult to integrate the v3 API with Angular. Therefore, the
+[plan][5] to adopt to the new API is onhold.
+
 ## Feature
 
 - Dynamically load MathJax library to your web application.
@@ -119,3 +124,4 @@ the typesetting when you want. The steps are:
 [2]: https://circleci.com/gh/davidshen84/ngx-mathjax
 [3]: https://www.mathjax.org/
 [4]: https://angular.io/
+[5]: https://github.com/davidshen84/ngx-mathjax/issues/7

@@ -70,9 +70,10 @@
     "tsickle": "^0.37.0",
     "tslint": "^5.20.0",
     "typescript": "^3.5.3",
-    "zone.js": "^0.9.1"
+    "zone.js": "^0.9.1",
+    "tslib": "^1.10.0"
   },
   "dependencies": {
-    "tslib": "^1.10.0"
+    "mathjax": "^3.0.0"
   }
 }
