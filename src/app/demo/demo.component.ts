@@ -31,9 +31,9 @@ import { Component, OnInit } from '@angular/core';
           Exp2:
           <input [(ngModel)]="exp2" name="exp2"/>
         </label>
-        <div #jax [mathjax]="[exp1, exp2]">
-          <div> Exp1: \\( {{ '{}' }} \\)</div>
-          <div> Exp2: $$ {{ '{}' }} $$</div>
+          <div>
+              <ngx-mathjax [expression]="exp1"></ngx-mathjax>
+              <ngx-mathjax [expression]="exp2"></ngx-mathjax>
         </div>
       </form>
     </div>

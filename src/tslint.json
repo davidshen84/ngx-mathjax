@@ -15,7 +15,8 @@
       "element",
       [
         "app",
-        "mathjax"
+        "mathjax",
+        "ngx"
       ],
       "kebab-case"
     ]

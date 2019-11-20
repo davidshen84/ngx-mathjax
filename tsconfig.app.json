@@ -1,13 +1,20 @@
 {
-  "extends": "../tsconfig.json",
+  "extends": "./tsconfig.json",
   "compilerOptions": {
-    "outDir": "../out-tsc/app",
-    "types": ["mathjax"]
+    "outDir": "./out-tsc/app",
+    "types": []
   },
   "angularCompilerOptions": {
     "enableIvy": true,
     "preserveWhitespaces": true
   },
+  "files": [
+    "src/main.ts",
+    "src/polyfills.ts"
+  ],
+  "include": [
+    "src/app/math-jax/MathJax.tex-chtml.d.ts"
+  ],
   "exclude": [
     "test.ts",
     "**/*.spec.ts",
