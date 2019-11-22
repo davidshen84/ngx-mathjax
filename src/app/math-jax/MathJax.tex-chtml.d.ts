@@ -6,10 +6,13 @@ interface document {
   clear(): void;
 
   updateDocument(): void;
+
+  state(state: number): void;
 }
 
 interface startup {
   document: document;
+  promise: Promise<any>;
 }
 
 declare namespace MathJax {
@@ -31,7 +34,7 @@ declare namespace MathJax {
 
   function tex2chtmlPromise(input: string, metrics: Metrics): Promise<HTMLElement>;
 
-  function typeset(elements: HTMLElement[]): void;
+  function typeset(elements?: HTMLElement[]): void;
 
-  function typesetPromise(elements: HTMLElement[]): Promise<any>;
+  function typesetPromise(elements?: HTMLElement[]): Promise<any>;
 }

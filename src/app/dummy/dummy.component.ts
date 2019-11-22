@@ -1,11 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { MathJaxDirective } from '../math-jax/math-jax.directive';
 
 @Component({
   selector: 'app-dummy',
   template: `
     <p>
       Use this dummy to test how the MathJax queue works when the component is being destroyed.
-      <markdown mathjax>
+      <markdown #md ngx-mathjax (load)="mdMathJax.typeset()">
         # Title
 
         *test*
@@ -19,6 +20,9 @@ import { Component, OnInit } from '@angular/core';
   styles: []
 })
 export class DummyComponent implements OnInit {
+
+  @ViewChild('md', {static: true, read: MathJaxDirective})
+  public mdMathJax: MathJaxDirective;
 
   constructor() {
   }

@@ -3,7 +3,7 @@ import { Component, ElementRef, Input, OnChanges, OnInit, ViewChild } from '@ang
 @Component({
   selector: 'ngx-mathjax',
   template: `
-      <div #output></div>
+    <div #output></div>
   `,
   styles: []
 })
@@ -32,12 +32,15 @@ export class MathJaxComponent implements OnInit, OnChanges {
     }
     const value = changes['expression'].currentValue;
 
-    MathJax.tex2chtmlPromise(value, this.metrics).then(node => {
-      MathJax.startup.document.clear();
-      MathJax.startup.document.updateDocument();
-      this.outputElement.innerHTML = '';
-      this.outputElement.appendChild(node);
-    });
+    MathJax.startup.promise
+      .then(() => MathJax.tex2chtmlPromise(value, this.metrics))
+      .then(node => {
+        MathJax.startup.document.clear();
+        MathJax.startup.document.updateDocument();
+
+        this.outputElement.innerHTML = '';
+        this.outputElement.appendChild(node);
+      });
   }
 
 }

@@ -7,7 +7,6 @@ import 'mathjax/es5/tex-chtml';
 import { ModuleWithProviders, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MathJaxDirective } from './math-jax.directive';
-import { MathJaxService } from './math-jax.service';
 import { MathJaxComponent } from './math-jax.component';
 
 declare global {
@@ -28,7 +27,7 @@ declare global {
 })
 export class MathJaxModule {
 
-  constructor(service: MathJaxService) {
+  constructor() {
     MathJax.texReset();
   }
 
@@ -38,9 +37,6 @@ export class MathJaxModule {
   public static forRoot(): ModuleWithProviders<MathJaxModule> {
     return {
       ngModule: MathJaxModule,
-      providers: [
-        {provide: MathJaxService, useClass: MathJaxService},
-      ]
     };
   }
 

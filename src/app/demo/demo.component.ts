@@ -22,7 +22,7 @@ import { Component, OnInit } from '@angular/core';
 
     <div>
       <h3>Dynamic typeset</h3>
-      <form #myform="ngForm">
+      <form #form="ngForm">
         <label>
           Exp1:
           <input [(ngModel)]="exp1" name="exp1"/>
@@ -31,9 +31,9 @@ import { Component, OnInit } from '@angular/core';
           Exp2:
           <input [(ngModel)]="exp2" name="exp2"/>
         </label>
-          <div>
-              <ngx-mathjax [expression]="exp1"></ngx-mathjax>
-              <ngx-mathjax [expression]="exp2"></ngx-mathjax>
+        <div>
+          <ngx-mathjax [expression]="exp1"></ngx-mathjax>
+          <ngx-mathjax [expression]="exp2"></ngx-mathjax>
         </div>
       </form>
     </div>

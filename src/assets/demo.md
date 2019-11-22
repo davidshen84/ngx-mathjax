@@ -1,4 +1,4 @@
-# MathJax Src
+# MathJax Markdown Demo
 
 $$
 mathjax = 1

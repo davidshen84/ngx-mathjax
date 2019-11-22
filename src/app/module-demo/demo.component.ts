@@ -8,7 +8,6 @@ import { MathJaxDirective } from '../math-jax/math-jax.directive';
     <markdown preserveWhitespaces mathjax>
       # Title
 
-
       *markdown*
 
       $$
@@ -19,7 +18,7 @@ import { MathJaxDirective } from '../math-jax/math-jax.directive';
     </markdown>
     <div>
       <h3>Dynamic typeset</h3>
-      <form #myform="ngForm">
+      <form #form="ngForm">
         <label>
           Exp1:
           <input [(ngModel)]="exp1" name="exp1"/>
@@ -28,13 +27,13 @@ import { MathJaxDirective } from '../math-jax/math-jax.directive';
           Exp2:
           <input [(ngModel)]="exp2" name="exp2"/>
         </label>
-          <!--        <div #jax [mathjax]="[exp1, exp2]">-->
-          <!--          <div> Exp1: \\( {{ '{}' }} \\)</div>-->
-          <!--          <div> Exp2: $$ {{ '{}' }} $$</div>-->
-          <!--        </div>-->
+        <div>
+          <ngx-mathjax [expression]="exp1"></ngx-mathjax>
+          <ngx-mathjax [expression]="exp2"></ngx-mathjax>
+        </div>
       </form>
     </div>
-    <markdown #mdSrc src="assets/demo.md" mathjax></markdown>
+    <markdown #mdSrc src="assets/demo.md" mathjax (load)="mdSrcMathJax.typeset()"></markdown>
   `,
   styles: []
 })
@@ -50,5 +49,4 @@ export class DemoComponent implements OnInit {
 
   ngOnInit() {
   }
-
 }
