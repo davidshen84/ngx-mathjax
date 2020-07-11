@@ -1,19 +1,17 @@
 {
-  "extends": "../tsconfig.json",
+  "extends": "../tsconfig.base.json",
   "compilerOptions": {
     "outDir": "../out-tsc/app",
     "types": ["mathjax"]
   },
   "angularCompilerOptions": {
-    "enableIvy": true,
     "preserveWhitespaces": true
   },
-  "exclude": [
-    "test.ts",
-    "**/*.spec.ts",
-    "app/app-routing.module.ts",
-    "app/demo/*",
-    "app/dummy/*",
-    "app/module-demo/*"
+  "files": [
+    "main.ts",
+    "polyfills.ts"
+  ],
+  "include": [
+    "src/**/*.d.ts"
   ]
 }

@@ -145,9 +145,12 @@ export class MathJaxModule {
   /**
    * Configure the module for a child module.
    */
-  public static forChild() {
+  /**
+ * Configure the module for a child module.
+ */
+public static forChild(): ModuleWithProviders<MathJaxModule> {
     return {
-      ngModule: MathJaxModule
+        ngModule: MathJaxModule
     };
-  }
+}
 }
