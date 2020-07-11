@@ -138,5 +138,8 @@
       }
     }
   },
-  "defaultProject": "ngx-mathjax"
+  "defaultProject": "ngx-mathjax",
+  "cli": {
+    "analytics": "78756954-6164-4a4d-97a9-fd4ce93152f6"
+  }
 }
