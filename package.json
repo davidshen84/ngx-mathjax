@@ -1,7 +1,7 @@
 {
   "$schema": "./node_modules/ng-packagr/package.schema.json",
   "name": "ngx-mathjax",
-  "version": "0.0.11",
+  "version": "0.0.13",
   "description": "Add MathJax typesetting to Angular application.",
   "keywords": [
     "angular",
@@ -19,7 +19,6 @@
     "start": "ng serve",
     "build": "ng build",
     "test": "ng test",
-    "lint": "ng lint",
     "e2e": "ng e2e",
     "packagr": "ng-packagr -p package.json",
     "docs": "compodoc -p src/tsconfig.app.json"
@@ -30,7 +29,9 @@
     }
   },
   "private": false,
-  "peerDependencies": {},
+  "peerDependencies": {
+    "mathjax": "^3.0.5"
+  },
   "devDependencies": {
     "@angular-devkit/build-angular": "~0.1000.2",
     "@angular/animations": "^10.0.3",
@@ -49,8 +50,13 @@
     "@types/jasminewd2": "^2.0.8",
     "@types/mathjax": "0.0.36",
     "@types/node": "^12.11.1",
-    "codelyzer": "^6.0.0",
+    "@typescript-eslint/eslint-plugin": "^3.6.1",
+    "@typescript-eslint/parser": "^3.6.1",
     "core-js": "^3.6.5",
+    "eslint": "^7.4.0",
+    "eslint-config-google": "^0.14.0",
+    "eslint-config-prettier": "^6.11.0",
+    "eslint-plugin-prettier": "^3.1.4",
     "jasmine-core": "~3.5.0",
     "jasmine-spec-reporter": "~5.0.0",
     "karma": "~5.0.0",
@@ -60,17 +66,15 @@
     "karma-jasmine-html-reporter": "^1.5.0",
     "ng-packagr": "^10.0.0",
     "ngx-markdown": "^10.0.0",
+    "prettier": "2.0.5",
     "protractor": "~7.0.0",
     "rxjs": "^6.6.0",
     "rxjs-spy": "^7.5.2",
     "ts-node": "~8.10.2",
-    "tslint": "~6.1.0",
     "typescript": "^3.9.6",
     "zone.js": "~0.10.3"
   },
   "dependencies": {
-    "@angular-devkit/schematics": "^10.0.2",
-    "mathjax": "^3.0.5",
     "tslib": "^2.0.0"
   }
 }

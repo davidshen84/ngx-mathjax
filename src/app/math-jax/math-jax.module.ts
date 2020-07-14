@@ -7,7 +7,6 @@ import { CommonModule } from '@angular/common';
 import { MathJaxDirective } from './math-jax.directive';
 import { MathJaxService } from './math-jax.service';
 
-
 /**
  * Module configuration class.
  *
@@ -51,13 +50,10 @@ export class ModuleConfiguration {
  */
 @NgModule({
   declarations: [MathJaxDirective],
-  imports: [
-    CommonModule
-  ],
-  exports: [MathJaxDirective]
+  imports: [CommonModule],
+  exports: [MathJaxDirective],
 })
 export class MathJaxModule {
-
   constructor(service: MathJaxService, moduleConfig?: ModuleConfiguration) {
     service.init();
 
@@ -68,7 +64,7 @@ export class MathJaxModule {
       MathJax.Hub.Config({
         skipStartupTypeset: true,
         messageStyle: 'none',
-        tex2jax: {preview: 'none'}
+        tex2jax: { preview: 'none' },
       });
       MathJax.Hub.Register.StartupHook('End', () => {
         window.mathJaxHub$.next();
@@ -104,53 +100,63 @@ export class MathJaxModule {
    * Configure the provider for hte module.
    *
    * @deprecated Use forRoot or forChild method instead.
-   * @param forRoot Make sure it is set to `true` for the root module and `false` for any child module.
-   * @param moduleConfiguration A {ModuleConfiguration} instance.
+   * @param {boolean} forRoot Make sure it is set to `true` for the root module and `false` for any child module.
+   * @param {ModuleConfiguration} moduleConfiguration A {ModuleConfiguration} instance.
+   *
+   * @return {ModuleWithproviders<MathJaxModule>} instance
    */
-  public static config(forRoot: boolean = true, moduleConfiguration: ModuleConfiguration = {
-    version: '2.7.5',
-    config: 'TeX-AMS_HTML',
-    hostname: 'cdnjs.cloudflare.com'
-  }): ModuleWithProviders<MathJaxModule> {
-    return forRoot ? {
-      ngModule: MathJaxModule,
-      providers: [
-        {provide: ModuleConfiguration, useValue: moduleConfiguration},
-        {provide: MathJaxService, useClass: MathJaxService},
-      ]
-    } : {
-      ngModule: MathJaxModule
-    };
+  public static config(
+    forRoot = true,
+    moduleConfiguration: ModuleConfiguration = {
+      version: '2.7.5',
+      config: 'TeX-AMS_HTML',
+      hostname: 'cdnjs.cloudflare.com',
+    }
+  ): ModuleWithProviders<MathJaxModule> {
+    return forRoot
+      ? {
+          ngModule: MathJaxModule,
+          providers: [
+            { provide: ModuleConfiguration, useValue: moduleConfiguration },
+            { provide: MathJaxService, useClass: MathJaxService },
+          ],
+        }
+      : {
+          ngModule: MathJaxModule,
+        };
   }
 
   /**
    * Configure the module for the root module.
    *
-   * @param moduleConfiguration A {ModuleConfiguration} instance.
+   * @param {ModuleConfiguration} moduleConfiguration configuration
+   *
+   * @return {ModuleWithproviders<MathJaxModule>}
    */
-  public static forRoot(moduleConfiguration: ModuleConfiguration = {
-    version: '2.7.5',
-    config: 'TeX-AMS_HTML',
-    hostname: 'cdnjs.cloudflare.com'
-  }): ModuleWithProviders<MathJaxModule> {
+  public static forRoot(
+    moduleConfiguration: ModuleConfiguration = {
+      version: '2.7.5',
+      config: 'TeX-AMS_HTML',
+      hostname: 'cdnjs.cloudflare.com',
+    }
+  ): ModuleWithProviders<MathJaxModule> {
     return {
       ngModule: MathJaxModule,
       providers: [
-        {provide: ModuleConfiguration, useValue: moduleConfiguration},
-        {provide: MathJaxService, useClass: MathJaxService},
-      ]
+        { provide: ModuleConfiguration, useValue: moduleConfiguration },
+        { provide: MathJaxService, useClass: MathJaxService },
+      ],
     };
   }
 
   /**
    * Configure the module for a child module.
+   *
+   * @return {object}
    */
-  /**
- * Configure the module for a child module.
- */
-public static forChild(): ModuleWithProviders<MathJaxModule> {
+  public static forChild(): ModuleWithProviders<MathJaxModule> {
     return {
-        ngModule: MathJaxModule
+      ngModule: MathJaxModule,
     };
-}
+  }
 }

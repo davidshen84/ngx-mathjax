@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Injectable } from '@angular/core';
 import { ReplaySubject, Subject } from 'rxjs';
 
@@ -18,7 +19,6 @@ declare global {
  */
 @Injectable()
 export class MathJaxService {
-
   /**
    * Signals when the MathJax object is ready.
    */
@@ -32,7 +32,5 @@ export class MathJaxService {
      * Create a global variable.
      */
     window.mathJaxHub$ = this.MathJaxHub$;
-
   }
-
 }

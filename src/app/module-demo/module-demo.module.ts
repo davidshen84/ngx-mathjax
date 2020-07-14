@@ -16,8 +16,7 @@ import { HttpClientModule } from '@angular/common/http';
     MarkdownModule.forChild(),
     ModuleDemoRoutingModule,
     FormsModule,
-    HttpClientModule
-  ]
+    HttpClientModule,
+  ],
 })
-export class ModuleDemoModule {
-}
+export class ModuleDemoModule {}

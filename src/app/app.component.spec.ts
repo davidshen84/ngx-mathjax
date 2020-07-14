@@ -11,17 +11,13 @@ import { MarkdownModule } from 'ngx-markdown';
 describe('AppComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [
-        AppComponent,
-        DemoComponent,
-        DummyComponent
-      ],
+      declarations: [AppComponent, DemoComponent, DummyComponent],
       imports: [
         FormsModule,
         MathJaxModule.forRoot(),
         MarkdownModule.forRoot(),
-        RouterTestingModule.withRoutes(routes)
-      ]
+        RouterTestingModule.withRoutes(routes),
+      ],
     }).compileComponents();
   }));
 
@@ -31,7 +27,8 @@ describe('AppComponent', () => {
     expect(app).toBeTruthy();
   });
 
-  it(`should have as title 'ngx-mathjax'`, () => {
+  // eslint-disable-next-line quotes
+  it("should have as title 'ngx-mathjax'", () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.debugElement.componentInstance;
     expect(app.title).toEqual('ngx-mathjax');

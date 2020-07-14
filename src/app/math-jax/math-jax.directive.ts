@@ -1,18 +1,32 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /**
  * @author davidshen84
  */
 import { UpdateValue } from './domain/interfaces';
-import { AfterViewInit, Directive, ElementRef, Input, OnChanges, OnDestroy, SimpleChanges } from '@angular/core';
-import { combineLatest, Observable, ReplaySubject, Subject, Subscription } from 'rxjs';
+import {
+  AfterViewInit,
+  Directive,
+  ElementRef,
+  Input,
+  OnChanges,
+  OnDestroy,
+  SimpleChanges,
+} from '@angular/core';
+import {
+  combineLatest,
+  Observable,
+  ReplaySubject,
+  Subject,
+  Subscription,
+} from 'rxjs';
 import { MathJaxService } from './math-jax.service';
 import { map } from 'rxjs/operators';
-
 
 /**
  * Typeset the content or expressions using MathJax library.
  */
 @Directive({
-  selector: 'mathjax, [mathjax]'
+  selector: 'mathjax, [mathjax]',
 })
 export class MathJaxDirective implements AfterViewInit, OnChanges, OnDestroy {
   /**
@@ -46,31 +60,38 @@ export class MathJaxDirective implements AfterViewInit, OnChanges, OnDestroy {
     this.mathJaxHub$ = service.MathJaxHub$;
     this.element = el.nativeElement;
 
-    this.typesetSubscription = combineLatest([this.mathJaxHub$, this.mathJaxTypesetSubject])
-      .subscribe(() => {
-        MathJax.Hub.Queue(['Typeset', MathJax.Hub, this.element]);
-      });
+    this.typesetSubscription = combineLatest([
+      this.mathJaxHub$,
+      this.mathJaxTypesetSubject,
+    ]).subscribe(() => {
+      MathJax.Hub.Queue(['Typeset', MathJax.Hub, this.element]);
+    });
 
-    this.allJax$ = combineLatest([this.mathJaxHub$, this.mathJaxTypesetSubject]).pipe(
-      map(() => MathJax.Hub.getAllJax(this.element))
-    );
+    this.allJax$ = combineLatest([
+      this.mathJaxHub$,
+      this.mathJaxTypesetSubject,
+    ]).pipe(map(() => MathJax.Hub.getAllJax(this.element)));
 
-    this.expressionChangeSubscription = combineLatest([this.allJax$, this.expressionChangeSubject])
-      .subscribe(([jax, updateValue]) =>
-        updateValue.forEach(v => MathJax.Hub.Queue(() => {
+    this.expressionChangeSubscription = combineLatest([
+      this.allJax$,
+      this.expressionChangeSubject,
+    ]).subscribe(([jax, updateValue]) =>
+      updateValue.forEach((v) =>
+        MathJax.Hub.Queue(() => {
           // Stop pushing messages to the queue when the component is being destroyed.
           if (!this.isDestroying) {
             return jax[v.order].Text(v.value);
           }
-        })));
+        })
+      )
+    );
   }
 
   ngAfterViewInit(): void {
-    this.hubSubscription = this.mathJaxHub$
-      .subscribe(() => {
-        MathJax.Hub.Queue(['Typeset', MathJax.Hub, this.element]);
-        MathJax.Hub.Queue(['MathJaxTypeset', this]);
-      });
+    this.hubSubscription = this.mathJaxHub$.subscribe(() => {
+      MathJax.Hub.Queue(['Typeset', MathJax.Hub, this.element]);
+      MathJax.Hub.Queue(['MathJaxTypeset', this]);
+    });
   }
 
   /**
@@ -93,13 +114,14 @@ export class MathJaxDirective implements AfterViewInit, OnChanges, OnDestroy {
     // Update only the changed expressions.
     const updateValues: UpdateValue<string>[] = expressions.currentValue
       .map((cv, i) =>
-        (expressions.previousValue ? expressions.previousValue[i] !== cv : true) ?
-          {
-            value: expressions.currentValue[i],
-            order: i
-          }
-          : undefined)
-      .filter(v => v);
+        (expressions.previousValue ? expressions.previousValue[i] !== cv : true)
+          ? {
+              value: expressions.currentValue[i],
+              order: i,
+            }
+          : undefined
+      )
+      .filter((v) => v);
     this.expressionChangeSubject.next(updateValues);
   }
 

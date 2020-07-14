@@ -1,0 +1,30 @@
+{
+  "env": {
+    "browser": true,
+    "es2020": true,
+    "node": true
+  },
+  "extends": [
+    "eslint:recommended",
+    "google",
+    "plugin:prettier/recommended",
+    "plugin:@typescript-eslint/recommended"
+  ],
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "ecmaVersion": 11
+  },
+  "plugins": [
+    "prettier",
+    "@typescript-eslint",
+    "@typescript-eslint/eslint-plugin"
+  ],
+  "rules": {
+    "prettier/prettier": ["error", {"singleQuote": true}],
+    "new-cap": "off",
+    "require-jsdoc": "off",
+    "quotes": ["error", "single"],
+    "@typescript-eslint/no-empty-function": "off",
+    "@typescript-eslint/explicit-module-boundary-types": "off"
+  }
+}

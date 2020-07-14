@@ -14,11 +14,7 @@ import { ModuleDemoModule } from './module-demo/module-demo.module';
  * @ignore
  */
 @NgModule({
-  declarations: [
-    AppComponent,
-    DummyComponent,
-    DemoComponent
-  ],
+  declarations: [AppComponent, DummyComponent, DemoComponent],
   imports: [
     BrowserModule,
     FormsModule,
@@ -28,7 +24,6 @@ import { ModuleDemoModule } from './module-demo/module-demo.module';
     ModuleDemoModule,
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule {
-}
+export class AppModule {}

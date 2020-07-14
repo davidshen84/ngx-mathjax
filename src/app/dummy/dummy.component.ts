@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -16,14 +17,10 @@ import { Component, OnInit } from '@angular/core';
       </markdown>
     </p>
   `,
-  styles: []
+  styles: [],
 })
 export class DummyComponent implements OnInit {
+  constructor() {}
 
-  constructor() {
-  }
-
-  ngOnInit() {
-  }
-
+  ngOnInit() {}
 }
