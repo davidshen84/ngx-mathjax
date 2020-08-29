@@ -6,6 +6,10 @@ import { ModuleWithProviders, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MathJaxDirective } from './math-jax.directive';
 import { MathJaxService } from './math-jax.service';
+import { Observable } from 'rxjs';
+import { MathJaxConfigObject } from '../math-jax/I-mathjax-configobject'; 
+import { reduce } from 'rxjs/operators';
+
 
 /**
  * Module configuration class.
@@ -34,6 +38,12 @@ export class ModuleConfiguration {
    * MathJax CDN hostname. Please check [here](https://docs.mathjax.org/en/latest/start.html#mathjax-cdn) for available CDN servers.
    */
   hostname: string;
+
+  /*
+   * Optional MathJax Configuration Call Object. Please check [here](https://docs.mathjax.org/en/v2.7-latest/configuration.html#using-in-line-configuration-options) for specifics on the MathJax.Hub.Config call.
+   */
+
+  mathjaxconfigobject?: MathJaxConfigObject;
 }
 
 /**
@@ -60,17 +70,23 @@ export class MathJaxModule {
     /**
      * Define the **function string** to be inserted into the mathjax configuration script block.
      */
-    const mathJaxHubConfig = (() => {
-      MathJax.Hub.Config({
-        skipStartupTypeset: true,
-        messageStyle: 'none',
-        tex2jax: { preview: 'none' },
-      });
+
+    // example config object to be inserted 
+
+    let mathJaxHubConfig = (() => {
+      //inserthere 
       MathJax.Hub.Register.StartupHook('End', () => {
         window.mathJaxHub$.next();
         window.mathJaxHub$.complete();
       });
     }).toString();
+
+    /* Add MathJax Config Call by replacing '//inserthere' in the HTML script element */
+
+    mathJaxHubConfig = mathJaxHubConfig.replace(
+      '//inserthere',
+      'MathJax.Hub.Config(' + JSON.stringify(moduleConfig.mathjaxconfigobject) + ');'
+    );
 
     if (moduleConfig) {
       /**
@@ -138,6 +154,7 @@ export class MathJaxModule {
       version: '2.7.5',
       config: 'TeX-AMS_HTML',
       hostname: 'cdnjs.cloudflare.com',
+      mathjaxconfigobject: {},
     }
   ): ModuleWithProviders<MathJaxModule> {
     return {
