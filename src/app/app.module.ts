@@ -29,7 +29,7 @@ import { MathJaxConfigObject } from '../app/math-jax/I-mathjax-configobject'
           'HTML-CSS': {
             styles: {
               '.MathJax_Display': {
-                'background-color': 'blue',
+                'background-color': 'yellow',
               },
             },
           },

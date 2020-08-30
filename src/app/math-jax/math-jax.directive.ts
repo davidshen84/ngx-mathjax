@@ -8,9 +8,11 @@ import {
   Directive,
   ElementRef,
   Input,
+  Output,
   OnChanges,
   OnDestroy,
   SimpleChanges,
+  EventEmitter
 } from '@angular/core';
 import {
   combineLatest,
@@ -18,6 +20,7 @@ import {
   ReplaySubject,
   Subject,
   Subscription,
+  Observer,
 } from 'rxjs';
 import { MathJaxService } from './math-jax.service';
 import { map } from 'rxjs/operators';
@@ -56,7 +59,13 @@ export class MathJaxDirective implements AfterViewInit, OnChanges, OnDestroy {
   private hubSubscription: Subscription;
   private isDestroying: boolean;
 
+  /**
+   * Callback function to be called when rendering is finished
+   */
+    @Output('callback') callback: EventEmitter<any> = new EventEmitter();
+
   constructor(el: ElementRef, service: MathJaxService) {
+
     this.mathJaxHub$ = service.MathJaxHub$;
     this.element = el.nativeElement;
 
@@ -64,7 +73,13 @@ export class MathJaxDirective implements AfterViewInit, OnChanges, OnDestroy {
       this.mathJaxHub$,
       this.mathJaxTypesetSubject,
     ]).subscribe(() => {
+      /* Add typesetting call to MathJax Queue */ 
       MathJax.Hub.Queue(['Typeset', MathJax.Hub, this.element]);
+
+      /* Add callback to MathJax Queue */ 
+      MathJax.Hub.Queue(() => {
+        this.callback.emit();
+      });
     });
 
     this.allJax$ = combineLatest([
@@ -85,9 +100,11 @@ export class MathJaxDirective implements AfterViewInit, OnChanges, OnDestroy {
         })
       )
     );
+
   }
 
   ngAfterViewInit(): void {
+
     this.hubSubscription = this.mathJaxHub$.subscribe(() => {
       MathJax.Hub.Queue(['Typeset', MathJax.Hub, this.element]);
       MathJax.Hub.Queue(['MathJaxTypeset', this]);
@@ -135,4 +152,6 @@ export class MathJaxDirective implements AfterViewInit, OnChanges, OnDestroy {
     this.mathJaxTypesetSubject.complete();
     this.expressionChangeSubject.complete();
   }
+
+
 }
