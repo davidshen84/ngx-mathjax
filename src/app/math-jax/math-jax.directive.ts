@@ -20,7 +20,6 @@ import {
   ReplaySubject,
   Subject,
   Subscription,
-  Observer,
 } from 'rxjs';
 import { MathJaxService } from './math-jax.service';
 import { map } from 'rxjs/operators';

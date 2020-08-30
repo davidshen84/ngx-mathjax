@@ -32,7 +32,6 @@ import { MathJaxDirective } from '../math-jax/math-jax.directive';
         <div #jax [mathjax]="[exp1, exp2]">
           <div>Exp1: \\( {{ '{}' }} \\)</div>
           <div>Exp2: $$ {{ '{}' }} $$</div>
-          <div> {{exp3}}</div>
         </div>
       </form>
     </div>
@@ -48,7 +47,6 @@ import { MathJaxDirective } from '../math-jax/math-jax.directive';
 export class DemoComponent implements OnInit {
   exp1 = 'E = mc^2';
   exp2 = 'x = 1';
-  exp3 = 'blablala'; 
 
   @ViewChild('mdSrc', { read: MathJaxDirective, static: true })
   mdSrcMathJax: MathJaxDirective;

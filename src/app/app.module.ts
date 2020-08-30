@@ -9,7 +9,7 @@ import { DummyComponent } from './dummy/dummy.component';
 import { DemoComponent } from './demo/demo.component';
 import { MarkdownModule } from 'ngx-markdown';
 import { ModuleDemoModule } from './module-demo/module-demo.module';
-import { MathJaxConfigObject } from '../app/math-jax/I-mathjax-configobject'
+import { MathJaxConfigObject } from '../app/math-jax/domain/interfaces'
 /**
  * @ignore
  */

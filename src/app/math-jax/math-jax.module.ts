@@ -6,10 +6,7 @@ import { ModuleWithProviders, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MathJaxDirective } from './math-jax.directive';
 import { MathJaxService } from './math-jax.service';
-import { Observable } from 'rxjs';
-import { MathJaxConfigObject } from '../math-jax/I-mathjax-configobject'; 
-import { reduce } from 'rxjs/operators';
-
+import { MathJaxConfigObject } from '../math-jax/domain/interfaces';
 
 /**
  * Module configuration class.
@@ -71,7 +68,20 @@ export class MathJaxModule {
      * Define the **function string** to be inserted into the mathjax configuration script block.
      */
 
-    // example config object to be inserted 
+    let mathjaxconfigobject: MathJaxConfigObject = {};
+
+    if (moduleConfig.mathjaxconfigobject == undefined) {
+      /* Default MathJax Configuration */ 
+      mathjaxconfigobject = {
+        skipStartupTypeset: true,
+        messageStyle: 'none',
+        tex2jax: { preview: 'none' },
+      };
+    }
+    else 
+    {
+      mathjaxconfigobject = moduleConfig.mathjaxconfigobject;
+    }
 
     let mathJaxHubConfig = (() => {
       //inserthere 
@@ -85,7 +95,7 @@ export class MathJaxModule {
 
     mathJaxHubConfig = mathJaxHubConfig.replace(
       '//inserthere',
-      'MathJax.Hub.Config(' + JSON.stringify(moduleConfig.mathjaxconfigobject) + ');'
+      'MathJax.Hub.Config(' + JSON.stringify(mathjaxconfigobject) + ');'
     );
 
     if (moduleConfig) {
