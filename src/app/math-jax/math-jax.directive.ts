@@ -62,7 +62,7 @@ export class MathJaxDirective implements AfterViewInit, OnChanges, OnDestroy {
   /**
    * Callback function to be called when rendering is finished
    */
-    @Output('callback') callback: EventEmitter<any> = new EventEmitter();
+    @Output('mathjax-callback') callback: EventEmitter<any> = new EventEmitter();
 
   constructor(el: ElementRef, service: MathJaxService) {
 

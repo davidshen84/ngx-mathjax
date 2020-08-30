@@ -43,7 +43,16 @@ import {MathJaxModule} from './src/app/math-jax/math-jax.module';
     MathJaxModule.forRoot({
       version: '2.7.5',
       config: 'TeX-AMS_HTML',
-      hostname: 'cdnjs.cloudflare.com'
+      hostname: 'cdnjs.cloudflare.com',
+      mathjaxconfigobject : {
+          'HTML-CSS': {
+            styles: {
+              '.MathJax_Display': {
+                'background-color': 'yellow',
+              },
+            },
+          },
+        },
     })
   ],
   providers: [],
@@ -55,6 +64,8 @@ export class AppModule { }
 - `version` is the MathJax release version.
 - `config` is the MathJax predefined configuration name.
 - `hostname` is the MathJax CDN hostname.
+- `mathjaxconfigobject` is the MathJax Configuration Object allowing you to directly influence the Typesetting and other options (which you can read more about at [6]).
+
 
 When importing in a **child** module, the module must be configured to
 re-use the same module instance as the root module. So simply
@@ -115,6 +126,26 @@ the typesetting when you want. The steps are:
   `MathJaxDirective` instance
 - Call `instance.MathJaxTypeset()`
 
+## Adding a callback 
+
+You can specify a callback function to be called when the rendering is finished
+
+*component.ts*
+```component.ts
+export class yourComponent implements OnInit {
+  callback = function () {
+      console.log("Callback function called!")
+    }
+}
+```
+
+*template or html*
+```
+<div mathjax (mathjax-callback)="callback()">
+    \\( E = mc^2 \\)
+</div>
+```
+
 ## TODO
 
 *empty*
@@ -125,3 +156,4 @@ the typesetting when you want. The steps are:
 [3]: https://www.mathjax.org/
 [4]: https://angular.io/
 [5]: https://github.com/davidshen84/ngx-mathjax/issues/7
+[6]: https://docs.mathjax.org/en/v2.7-latest/configuration.html#using-in-line-configuration-options

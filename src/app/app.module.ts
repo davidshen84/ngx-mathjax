@@ -25,6 +25,8 @@ import { MathJaxConfigObject } from '../app/math-jax/I-mathjax-configobject'
         version: '2.7.5',
         config: 'TeX-AMS_HTML',
         hostname: 'cdnjs.cloudflare.com',
+        /* Optional MathJax Configuration Object */ 
+        /*
         mathjaxconfigobject : {
           'HTML-CSS': {
             styles: {
@@ -33,7 +35,7 @@ import { MathJaxConfigObject } from '../app/math-jax/I-mathjax-configobject'
               },
             },
           },
-        },
+        },*/
       }
     ),
     MarkdownModule.forRoot(),

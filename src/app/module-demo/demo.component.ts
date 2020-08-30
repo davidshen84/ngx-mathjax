@@ -23,13 +23,13 @@ import { MathJaxDirective } from '../math-jax/math-jax.directive';
       <form #myform="ngForm">
         <label>
           Exp1:
-          <input [(ngModel)]="exp1" name="exp1" />
+          <input [(ngModel)]="exp1" name="exp1"/>
         </label>
         <label>
           Exp2:
           <input [(ngModel)]="exp2" name="exp2" />
         </label>
-        <div #jax [mathjax]="[exp1, exp2]" (callback)="callback()">
+        <div #jax [mathjax]="[exp1, exp2]">
           <div>Exp1: \\( {{ '{}' }} \\)</div>
           <div>Exp2: $$ {{ '{}' }} $$</div>
           <div> {{exp3}}</div>
@@ -49,9 +49,6 @@ export class DemoComponent implements OnInit {
   exp1 = 'E = mc^2';
   exp2 = 'x = 1';
   exp3 = 'blablala'; 
-  callback = function () {
-    console.log("Function called!")
-  }
 
   @ViewChild('mdSrc', { read: MathJaxDirective, static: true })
   mdSrcMathJax: MathJaxDirective;
