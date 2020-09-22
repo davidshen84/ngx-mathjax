@@ -16,7 +16,7 @@ import { Component, OnInit } from '@angular/core';
 
     <div>
       <h2>Math inline</h2>
-      <div mathjax>
+      <div mathjax (mathjax-callback)="callback()">
         Fact: \\( E = mc^2 \\)
       </div>
     </div>
@@ -47,6 +47,10 @@ export class DemoComponent implements OnInit {
   show = true;
   exp1 = 'E = mc^2';
   exp2 = 'x = 1';
+  callback = () =>
+  {
+    console.log("Callback in Demo called!");
+  }
 
   constructor() {}
 

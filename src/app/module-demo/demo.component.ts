@@ -23,7 +23,7 @@ import { MathJaxDirective } from '../math-jax/math-jax.directive';
       <form #myform="ngForm">
         <label>
           Exp1:
-          <input [(ngModel)]="exp1" name="exp1" />
+          <input [(ngModel)]="exp1" name="exp1"/>
         </label>
         <label>
           Exp2:
